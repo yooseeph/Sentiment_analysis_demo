@@ -19,10 +19,11 @@
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/jaratM/demo_final.git
+git clone https://github.com/jaratM/sentiment-analysis-demo
+
 hf download JaratX/sa-models --local-dir models
 ```
-**Note:** Ensure that you download the models into the `demo_final` directory.
+**Note:** Ensure that you download the models into the `sentiment-analysis-demo` directory.
 
 ### 2. Create Virtual Environment
 
