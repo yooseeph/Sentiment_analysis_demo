@@ -31,9 +31,9 @@ A multi-modal sentiment analysis system for customer support calls with real-tim
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/jaratM/demo_final.git
+git clone https://github.com/jaratM/sentiment-analysis-demo
 
-cd demo_final
+cd sentiment-analysis-demo
 ```
 
 2. Copy and configure environment:
