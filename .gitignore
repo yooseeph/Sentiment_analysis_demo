@@ -2,3 +2,4 @@ models/
 logs/
 GradioTEMP/
 __pycache__/logs/
+.env
