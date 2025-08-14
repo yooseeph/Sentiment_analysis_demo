@@ -1,4 +1,4 @@
 models/
 logs/
 GradioTEMP/
-__pycache__/
+__pycache__/logs/
