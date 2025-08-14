@@ -183,32 +183,6 @@ docker run -d \
   sentiment-dashboard
 ```
 
-## Nginx Reverse Proxy
-
-For production deployment behind Nginx:
-
-```nginx
-server {
-    listen 80;
-    server_name your-domain.com;
-
-    location / {
-        proxy_pass http://localhost:7861;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        
-        # WebSocket support
-        proxy_read_timeout 86400;
-    }
-}
-```
-
 ## Performance Tuning
 
 ### 1. GPU Memory Optimization
@@ -246,7 +220,7 @@ class AudioConfig:
 
 ```bash
 # View logs
-tail -f logs/dashboard.log
+tail -f logs/dashboard*.log
 
 # Log rotation is automatic (configured in LoggingConfig)
 ```
@@ -263,18 +237,7 @@ htop
 # Disk usage
 df -h
 ```
-
-### 3. Health Check Endpoint
-
-Add a health check route for monitoring:
-
-```python
-# In dashboard.py
-@interface.app.get("/health")
-def health_check():
-    return {"status": "healthy", "timestamp": datetime.now().isoformat()}
-```
-
+s
 ## Troubleshooting
 
 ### Common Issues
@@ -307,27 +270,6 @@ Enable debug logging:
 export LOG_LEVEL=DEBUG
 python dashboard.py
 ```
-
-## Security Considerations
-
-1. **Authentication**: Always enable authentication in production
-   ```bash
-   DASHBOARD_AUTH=admin:strong_password_here
-   ```
-
-2. **HTTPS**: Use SSL/TLS certificates with Nginx
-   ```bash
-   certbot --nginx -d your-domain.com
-   ```
-
-3. **Firewall**: Configure firewall rules
-   ```bash
-   ufw allow 22/tcp
-   ufw allow 443/tcp
-   ufw enable
-   ```
-
-4. **Secrets Management**: Use environment variables or secrets manager for sensitive data
 
 ## Backup and Recovery
 
