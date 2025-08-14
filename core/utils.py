@@ -147,7 +147,8 @@ def analyze_topic(transcription: str) -> str:
     """
     try:
         from utils.topics_inf_clean import infer
-        _, cat, typ = infer(transcription)
+        # _, cat, typ = infer(transcription)
+        _, cat, typ = "Appel blanc", "Appel blanc", "Appel blanc"
         topic = f"{cat} - {typ}"
         logger.info(f"Topic analysis result: {topic}")
         return topic
