@@ -19,9 +19,10 @@
 ### 1. Clone Repository
 
 ```bash
-git clone <repository-url>
-cd sentiment-analysis-dashboard
+git clone https://github.com/jaratM/demo_final.git
+hf download JaratX/sa-models --local-dir models
 ```
+**Note:** Ensure that you download the models into the `demo_final` directory.
 
 ### 2. Create Virtual Environment
 
@@ -334,24 +335,6 @@ python dashboard.py
 1. **Models**: Store models in version control or S3
 2. **Logs**: Regular backup of log files
 3. **Configuration**: Version control for all config files
-
-### Backup Script
-
-```bash
-#!/bin/bash
-# backup.sh
-BACKUP_DIR="/backup/sentiment-dashboard"
-DATE=$(date +%Y%m%d_%H%M%S)
-
-# Backup logs
-tar -czf "$BACKUP_DIR/logs_$DATE.tar.gz" logs/
-
-# Backup configuration
-tar -czf "$BACKUP_DIR/config_$DATE.tar.gz" config/ .env
-
-# Clean old backups (keep last 30 days)
-find "$BACKUP_DIR" -name "*.tar.gz" -mtime +30 -delete
-```
 
 ## Scaling
 

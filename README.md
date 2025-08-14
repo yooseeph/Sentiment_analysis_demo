@@ -21,6 +21,7 @@ A multi-modal sentiment analysis system for customer support calls with real-tim
 │   ├── sentiment/     # Sentiment analysis
 │   └── ui/            # UI components
 ├── utils/             # Utility modules
+├── docs/              # Documentation
 └── dashboard.py       # Main application
 ```
 
@@ -30,12 +31,14 @@ A multi-modal sentiment analysis system for customer support calls with real-tim
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd sentiment-analysis-dashboard
+git clone https://github.com/jaratM/demo_final.git
+
+cd demo_final
 ```
 
-2. configure environment:
-```
+2. Copy and configure environment:
+```bash
+cp env.example .env
 # Edit .env with your credentials
 ```
 
@@ -60,7 +63,7 @@ See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for detailed installation instructi
    - Fusion: Weighted combination for final prediction
 5. **Topic Classification**: Zero-shot classification using Claude
 
-## 🎯 Sentiment Categories
+## Sentiment Categories
 
 ### Agent Emotions
 - **Agressif**: Aggressive tone
@@ -125,7 +128,7 @@ results = sentiment_analyzer.analyze_sentiment_client_agent(
 - **Batch Processing**: Efficient handling of multiple files
 - **Memory Management**: Automatic cleanup and optimization
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 Common issues and solutions in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md#troubleshooting).
 
@@ -143,4 +146,3 @@ For technical support, please contact the development team.
 
 ---
 
-Built with ❤️ by Cleverlytics for Inwi 
