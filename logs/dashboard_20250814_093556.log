@@ -1,0 +1,9 @@
+2025-08-14 09:35:59 - sentiment_dashboard - ERROR - ✗ Failed to load Sentiment Evaluator from OptimizedDualMultimodalEvaluator
+2025-08-14 09:35:59 - sentiment_dashboard - INFO - Starting Sentiment Analysis Dashboard...
+2025-08-14 09:35:59 - sentiment_dashboard - INFO - ============================================================
+2025-08-14 09:35:59 - sentiment_dashboard - INFO - Initializing Sentiment Analysis Dashboard
+2025-08-14 09:35:59 - sentiment_dashboard - INFO - ============================================================
+2025-08-14 09:35:59 - sentiment_dashboard - ERROR - ✗ Failed to load Transcription Model from /home/mohamed/inwi/demo_final/models/transcription/w2v-bert-darija-finetuned-clean
+2025-08-14 09:36:06 - sentiment_dashboard - INFO - ✓ Loaded VAD Pipeline from pyannote/voice-activity-detection
+2025-08-14 09:36:06 - sentiment_dashboard - ERROR - ✗ Failed to load Sentiment Evaluator from OptimizedDualMultimodalEvaluator
+2025-08-14 09:36:06 - sentiment_dashboard - CRITICAL - Failed to load transcription model - aborting

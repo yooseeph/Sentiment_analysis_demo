@@ -1,0 +1,7 @@
+2025-08-13 16:35:41 - sentiment_dashboard - ERROR - ✗ Failed to load Sentiment Evaluator from OptimizedDualMultimodalEvaluator
+2025-08-13 16:35:42 - sentiment_dashboard - INFO - Starting Sentiment Analysis Dashboard...
+2025-08-13 16:35:42 - sentiment_dashboard - INFO - ============================================================
+2025-08-13 16:35:42 - sentiment_dashboard - INFO - Initializing Sentiment Analysis Dashboard
+2025-08-13 16:35:42 - sentiment_dashboard - INFO - ============================================================
+2025-08-13 16:35:44 - sentiment_dashboard - INFO - ✓ Loaded Transcription Model from Cleverlytics/w2v-bert-clean
+2025-08-13 16:35:45 - sentiment_dashboard - INFO - Dashboard shutdown requested by user
