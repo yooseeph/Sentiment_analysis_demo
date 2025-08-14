@@ -128,9 +128,9 @@ def create_main_interface():
         
         # Header with logos and title
         gr.HTML(f"""
-            <div class="header-container">
+            <div class="header-container" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 0;">
                 <img src="data:image/png;base64,{logo_clever}" width="150" alt="Logo Cleverlytics">
-                <h2 class="header-title">Sentiment Analysis Dashboard</h2>
+                <h2 class="header-title" style="margin: 0; color: var(--body-text-color, #000) !important; font-weight: 600;">Sentiment Analysis Dashboard</h2>
                 <img src="data:image/png;base64,{logo_inwi}" width="120" alt="Logo Inwi">
             </div>
         """)
