@@ -50,7 +50,7 @@ cp env.example .env
 
 ### Manual Installation
 
-See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for detailed installation instructions.
+See  [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for detailed installation instructions.
 
 ## 📊 Analysis Pipeline
 
@@ -58,7 +58,7 @@ See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for detailed installation instructi
 2. **Voice Activity Detection**: PyAnnote-based speaker diarization
 3. **Transcription**: GPU-accelerated speech-to-text in Darija
 4. **Sentiment Analysis**: 
-   - Text-based: Fine-tuned MarBERT/ArabertV2
+   - Text-based: Fine-tuned SI2M-Lab/DarijaBERT
    - Acoustic: ML models on audio features
    - Fusion: Weighted combination for final prediction
 5. **Topic Classification**: Zero-shot classification using Claude
@@ -91,7 +91,7 @@ AWS_SECRET_ACCESS_KEY=your_secret
 
 # Server settings
 SERVER_PORT=7861
-GRADIO_SHARE=false
+GRADIO_SHARE=false 
 
 # Authentication
 DASHBOARD_AUTH=user:password
