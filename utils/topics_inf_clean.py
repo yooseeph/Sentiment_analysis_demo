@@ -25,7 +25,7 @@ logger = get_logger(__name__)
 class TopicClassifier:
     """Handles topic classification using AWS Bedrock"""
     
-    def __init__(self):
+    def __init__(self, business_type="B2C"):
         """Initialize topic classifier with AWS configuration"""
         # Check AWS configuration
         if not config.aws.is_configured:
@@ -45,17 +45,23 @@ class TopicClassifier:
         )
         
         # Load topic catalogue
-        self._load_topics()
+        self._load_topics(business_type)
         
         # Create prompts
         self._create_prompts()
         
         logger.info("Topic classifier initialized successfully")
     
-    def _load_topics(self):
+    def _load_topics(self, business_type="B2C"):
         """Load topic catalogue from Excel file"""
         try:
-            topics_path = Path(config.data.topics_glossary)
+            if business_type == "B2C":
+                topics_path = Path(config.data.topics_glossary_b2c)
+            elif business_type == "B2B":
+                topics_path = Path(config.data.topics_glossary_b2b)
+            else:
+                raise ValueError(f"Invalid business type: {business_type}")
+            
             if not topics_path.exists():
                 logger.error(f"Topics glossary not found: {topics_path}")
                 self.enabled = False
@@ -258,18 +264,3 @@ class TopicClassifier:
             return "Erreur", "Appel blanc", "Erreur"
 
 
-# Global classifier instance
-topic_classifier = TopicClassifier()
-
-
-def infer(transcription: str) -> Tuple[str, str, str]:
-    """
-    Legacy API function for backward compatibility
-    
-    Args:
-        transcription: Darija transcription
-        
-    Returns:
-        Tuple of (summary, category, type)
-    """
-    return topic_classifier.infer(transcription) 

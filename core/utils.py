@@ -156,7 +156,6 @@ def analyze_topic(transcription: str) -> str:
         logger.error(f"Error in topic analysis: {e}")
         return "Appel blanc"
 
-
 def get_custom_css() -> str:
     """Return custom CSS styles for the interface with proper dark mode support"""
     return """
@@ -186,24 +185,27 @@ def get_custom_css() -> str:
     .client {
         font-family: 'Cairo', 'Amiri', 'Times New Roman', serif !important;
     }
-    
+
+    /* ---------------- BiDi fixes (RTL/LTR mixing) ---------------- */
+    /* Give Arabic bubbles an RTL base and isolate their content so LTR tokens don't reorder */
     .bubble-container {
-        direction: rtl;
-        text-align: right;
+        direction: rtl;              /* base direction is RTL */
+        unicode-bidi: isolate;       /* isolate from siblings/parents */
+        text-align: start;           /* aligns correctly for RTL */
         line-height: 2.0;
-        margin-top: 10px;        /* More space */
-        margin-bottom: 10px;     /* More space */
-        padding-bottom: 10px;    /* More space */
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
         display: flex;
         align-items: flex-start;
         width: 100%;
         box-sizing: border-box;
     }
-    .bubble-container:last-child {
-        margin-bottom: 0;
-    }
-        
+    .bubble-container:last-child { margin-bottom: 0; }
+
     .agent, .client {
+        direction: rtl;              /* ensure each bubble itself is RTL */
+        unicode-bidi: isolate;       /* or 'plaintext' if you prefer; isolate is widely supported */
         background-color: #851868;
         color: #fff !important;
         padding: 12px 16px;
@@ -213,7 +215,14 @@ def get_custom_css() -> str:
         margin-right: 12px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.25);
         border: 1px solid rgba(255,255,255,0.08);
+        text-align: start;           /* keeps natural alignment for RTL text */
+        white-space: pre-wrap;       /* preserve spaces/line breaks if present */
     }
+
+    /* Optional helper class: wrap Latin fragments if/when you can in HTML:
+       <span class="ltr">inwi</span> */
+    .ltr { direction: ltr; unicode-bidi: isolate; }
+    /* ------------------------------------------------------------- */
         
     .tag {
         background-color: #58114c;
@@ -253,8 +262,8 @@ def get_custom_css() -> str:
     .tone-title {
         margin-top: 0;
         margin-bottom: 12px;
-        font-size: 14px !important; /* Reduced from 18px */
-        color: #F25C05 !important; /* Changed to orange */
+        font-size: 14px !important;
+        color: #F25C05 !important;
         font-weight: 500;
         font-family: 'Poppins', sans-serif !important;
     }
@@ -266,8 +275,8 @@ def get_custom_css() -> str:
     h3:contains("Agent"),
     .client-header,
     .agent-header {
-        color: #F25C05 !important; /* Orange color */
-        font-size: 14px !important; /* Smaller size */
+        color: #F25C05 !important;
+        font-size: 14px !important;
         font-weight: 600 !important;
         font-family: 'Poppins', sans-serif !important;
         margin-bottom: 8px !important;
@@ -307,7 +316,7 @@ def get_custom_css() -> str:
     .primary-button, #analyser-button {
         background-color: #A62182 !important;
         color: white !important;
-        font-weight: 500 !important;;
+        font-weight: 500 !important;
         font-family: 'Poppins', sans-serif !important;
         border: none;
         border-radius: 10px;
@@ -389,9 +398,7 @@ def get_custom_css() -> str:
     
     /* Media query fallback for header */
     @media (prefers-color-scheme: dark) {
-        .header-title {
-            color: #fff !important;
-        }
+        .header-title { color: #fff !important; }
     }
         
     /* Status indicator - Fixed for dark mode */

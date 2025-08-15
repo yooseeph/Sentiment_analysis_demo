@@ -29,6 +29,13 @@ def create_vue1_interface(ui_components: Dict[str, Any]) -> Dict[str, Any]:
     
     gr.Markdown("## **Analyse d'appel chunk par chunk: sentiment et topic**")
     
+    business_type = gr.Dropdown(
+        choices=["B2C", "B2B"],
+        value="B2C",
+        label="Type de business",
+        interactive=True
+    )
+    
     audio_input = gr.Audio(
         type="filepath",
         label="📁 Uploader un appel (WAV/OGG)"
@@ -86,7 +93,7 @@ def create_vue1_interface(ui_components: Dict[str, Any]) -> Dict[str, Any]:
         
         return gr.update(), gr.update(), gr.update(), gr.update(), gr.update(), gr.update()
     
-    def process_audio(audio_path, request: gr.Request = None):
+    def process_audio(audio_path, business_type="B2C", request: gr.Request = None):
         """Process audio file and extract chunks"""
         state = get_session_state(request)
         
@@ -110,7 +117,7 @@ def create_vue1_interface(ui_components: Dict[str, Any]) -> Dict[str, Any]:
         
         # Process chunks
         chunks, sentiments, topic_call = chunk_processor.optimized_chunker(
-            audio_path, request=request
+            audio_path, business_type, request=request
         )
         
         # Extract sentiment predictions
@@ -172,7 +179,7 @@ def create_vue1_interface(ui_components: Dict[str, Any]) -> Dict[str, Any]:
         show_progress=False,
     ).then(
         fn=process_audio,
-        inputs=[audio_input],
+        inputs=[audio_input, business_type],
         outputs=[chunk_selector, global_client, global_agent, topic_output],
         show_progress=False,
     ).then(
