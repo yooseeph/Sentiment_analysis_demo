@@ -163,8 +163,11 @@ class DataConfig:
     darija_french_dict: str = field(
         default_factory=lambda: str(UTILS_DIR / "darija_french_conversion.xlsx")
     )
-    topics_glossary: str = field(
+    topics_glossary_b2c: str = field(
         default_factory=lambda: str(UTILS_DIR / "glossaire B2C.xlsx")
+    )
+    topics_glossary_b2b: str = field(
+        default_factory=lambda: str(UTILS_DIR / "glossaire B2B.xlsx")
     )
     
     # Logo paths
