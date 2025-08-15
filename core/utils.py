@@ -158,20 +158,42 @@ def analyze_topic(transcription: str) -> str:
 
 
 def get_custom_css() -> str:
-    """Return custom CSS styles for the interface"""
+    """Return custom CSS styles for the interface with proper dark mode support"""
     return """
 <style>
     /* Global Styles */
-    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+    
+    /* Force Poppins as default for all elements with maximum specificity */
+    *, *::before, *::after,
+    body, div, span, p, h1, h2, h3, h4, h5, h6, 
+    button, input, textarea, label, select, option,
+    .gradio-container, .gradio-container *,
+    .gr-button, .gr-input, .gr-textbox, .gr-radio,
+    .gr-form, .gr-panel, .gr-block, .gr-box,
+    [class*="gradio"], [class*="gr-"],
+    .svelte-1ed2p3z, .svelte-1rjryqp, .svelte-nlb5t9,
+    .app, .container, .main {
+        font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif !important;
+    }
+    
+    /* Keep Cairo specifically for Arabic transcription bubbles with higher specificity */
+    .bubble-container,
+    .bubble-container *,
+    .bubble-container .agent,
+    .bubble-container .client,
+    .agent,
+    .client {
+        font-family: 'Cairo', 'Amiri', 'Times New Roman', serif !important;
+    }
     
     .bubble-container {
-        font-family: 'Cairo', sans-serif;
         direction: rtl;
         text-align: right;
-        line-height: 1.8;
-        margin-top: 10px;
-        margin-bottom: 22px;
-        padding-bottom: 6px;
+        line-height: 2.0;
+        margin-top: 10px;        /* More space */
+        margin-bottom: 10px;     /* More space */
+        padding-bottom: 10px;    /* More space */
         display: flex;
         align-items: flex-start;
         width: 100%;
@@ -182,7 +204,7 @@ def get_custom_css() -> str:
     }
         
     .agent, .client {
-        background-color: #A62182;
+        background-color: #851868;
         color: #fff !important;
         padding: 12px 16px;
         border-radius: 14px;
@@ -202,7 +224,7 @@ def get_custom_css() -> str:
         margin: 0 5px;
     }
         
-    /* Result Container */
+    /* Result Container - Fixed for dark mode */
     .result-container {
         display: flex;
         justify-content: space-between;
@@ -217,34 +239,76 @@ def get_custom_css() -> str:
         flex: 1;
         min-width: 280px;
         padding: 16px;
-        border-left: 3px solid #ddd !important;
-        background-color: #f9f9f9 !important;
+        border-left: 3px solid var(--border-color-primary, #ddd) !important;
+        background-color: var(--background-fill-primary, #f9f9f9) !important;
         border-radius: 8px;
-        color: #222 !important;
+        color: var(--body-text-color, #222) !important;
+        font-family: 'Poppins', sans-serif !important;
     }
     .tone-column * {
-        color: #222 !important;
+        color: var(--body-text-color, #222) !important;
+        font-family: 'Poppins', sans-serif !important;
     }
         
     .tone-title {
         margin-top: 0;
         margin-bottom: 12px;
-        font-size: 18px;
-        color: #111 !important;
-        font-weight: 600;
+        font-size: 14px !important; /* Reduced from 18px */
+        color: #F25C05 !important; /* Changed to orange */
+        font-weight: 500;
+        font-family: 'Poppins', sans-serif !important;
+    }
+    
+    /* Labels above transcription bubbles (Client/Agent) */
+    .transcription-label,
+    .speaker-label,
+    h3:contains("Client"),
+    h3:contains("Agent"),
+    .client-header,
+    .agent-header {
+        color: #F25C05 !important; /* Orange color */
+        font-size: 14px !important; /* Smaller size */
+        font-weight: 600 !important;
+        font-family: 'Poppins', sans-serif !important;
+        margin-bottom: 8px !important;
+        text-transform: uppercase;
     }
         
     .final-tone {
         margin-bottom: 10px;
         font-size: 15px;
-        color: #222 !important;
+        color: var(--body-text-color, #222) !important;
+        font-family: 'Poppins', sans-serif !important;
+    }
+    
+    /* Dark mode overrides */
+    .dark .tone-column,
+    [data-theme="dark"] .tone-column {
+        background-color: var(--background-fill-secondary, rgba(255,255,255,0.05)) !important;
+        border-left-color: var(--border-color-accent, #555) !important;
+    }
+    
+    .dark .tone-column *,
+    [data-theme="dark"] .tone-column * {
+        color: var(--body-text-color, #fff) !important;
+    }
+    
+    .dark .tone-title,
+    [data-theme="dark"] .tone-title {
+        color: var(--body-text-color, #fff) !important;
+    }
+    
+    .dark .final-tone,
+    [data-theme="dark"] .final-tone {
+        color: var(--body-text-color-subdued, #ccc) !important;
     }
         
     /* Button Styling */
     .primary-button, #analyser-button {
         background-color: #A62182 !important;
         color: white !important;
-        font-weight: bold;
+        font-weight: 500 !important;;
+        font-family: 'Poppins', sans-serif !important;
         border: none;
         border-radius: 10px;
         padding: 14px 28px;
@@ -260,7 +324,7 @@ def get_custom_css() -> str:
         cursor: pointer;
     }
             
-    /* Radio Group Styling */
+    /* Radio Group Styling - Fixed for dark mode */
     div[data-testid="radio-group"] {
         display: flex !important;
         flex-direction: column !important;
@@ -271,20 +335,35 @@ def get_custom_css() -> str:
     }
         
     div[data-testid="radio-option"] {
-        background: #f9f9f9;
+        background: var(--background-fill-secondary, #f9f9f9);
         padding: 12px 16px;
         border-radius: 10px;
-        border: 1px solid #ddd;
+        border: 1px solid var(--border-color-primary, #ddd);
         width: 100% !important;
         box-sizing: border-box;
         transition: background-color 0.2s ease;
+        color: var(--body-text-color, #000);
+        font-family: 'Poppins', sans-serif !important;
     }
         
     div[data-testid="radio-option"]:hover {
-        background-color: #eee;
+        background-color: var(--background-fill-primary, #eee);
+    }
+    
+    /* Dark mode radio options */
+    .dark div[data-testid="radio-option"],
+    [data-theme="dark"] div[data-testid="radio-option"] {
+        background: var(--background-fill-secondary, rgba(255,255,255,0.05));
+        border-color: var(--border-color-primary, #555);
+        color: var(--body-text-color, #fff);
+    }
+    
+    .dark div[data-testid="radio-option"]:hover,
+    [data-theme="dark"] div[data-testid="radio-option"]:hover {
+        background-color: var(--background-fill-primary, rgba(255,255,255,0.1));
     }
         
-    /* Header Styling */
+    /* Header Styling - Fixed for dark mode */
     .header-container {
         display: flex;
         justify-content: space-between;
@@ -296,16 +375,32 @@ def get_custom_css() -> str:
         
     .header-title {
         text-align: center;
-        color: #333 !important;
+        color: var(--body-text-color, #333) !important;
         margin: 0;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif !important;
+    }
+    
+    /* Dark mode header */
+    .dark .header-title,
+    [data-theme="dark"] .header-title {
+        color: var(--body-text-color, #fff) !important;
+    }
+    
+    /* Media query fallback for header */
+    @media (prefers-color-scheme: dark) {
+        .header-title {
+            color: #fff !important;
+        }
     }
         
-    /* Status indicator */
+    /* Status indicator - Fixed for dark mode */
     .status-indicator {
         padding: 8px 12px;
         border-radius: 6px;
         margin: 10px 0;
         font-weight: bold;
+        font-family: 'Poppins', sans-serif !important;
     }
         
     .status-cached {
@@ -318,6 +413,21 @@ def get_custom_css() -> str:
         background-color: #fff3cd;
         color: #856404;
         border: 1px solid #ffeaa7;
+    }
+    
+    /* Dark mode status indicators */
+    .dark .status-cached,
+    [data-theme="dark"] .status-cached {
+        background-color: rgba(40, 167, 69, 0.2);
+        color: #90ee90;
+        border-color: rgba(40, 167, 69, 0.3);
+    }
+    
+    .dark .status-fresh,
+    [data-theme="dark"] .status-fresh {
+        background-color: rgba(255, 193, 7, 0.2);
+        color: #ffd700;
+        border-color: rgba(255, 193, 7, 0.3);
     }
 
     /* Hide global Gradio queue status */
@@ -333,8 +443,53 @@ def get_custom_css() -> str:
         text-align: center;
         padding: 20px;
         font-size: 18px;
-        color: #A62182;
-        font-weight: bold;
+        color: #F25C05 !important;
+        font-weight: normal;
+        font-family: 'Poppins', sans-serif !important;
+    }
+    
+    /* Additional fixes for any remaining white backgrounds */
+    .dark div[style*="background-color: white"],
+    .dark div[style*="background: white"],
+    [data-theme="dark"] div[style*="background-color: white"],
+    [data-theme="dark"] div[style*="background: white"] {
+        background: var(--background-fill-primary, transparent) !important;
+        color: var(--body-text-color, #fff) !important;
+    }
+    
+    /* Force Poppins on common Gradio elements that might be stubborn */
+    .gr-text-input,
+    .gr-textbox,
+    .gr-dropdown,
+    .gr-slider,
+    .gr-number,
+    .gr-checkbox,
+    .gr-radio,
+    .gr-button,
+    .gr-file,
+    .gr-image,
+    .gr-audio,
+    .gr-video,
+    .gr-dataframe,
+    .gr-html,
+    .gr-json,
+    .gr-markdown,
+    .gr-code,
+    .gr-plot,
+    .gr-3d,
+    .gr-chatbot,
+    .gr-model3d {
+        font-family: 'Poppins', sans-serif !important;
+    }
+    
+    /* Target Gradio's internal classes more specifically */
+    .svelte-1ed2p3z *,
+    .svelte-1rjryqp *,
+    .svelte-nlb5t9 *,
+    .gradio-container .wrap *,
+    .gradio-container .block *,
+    .gradio-container .form * {
+        font-family: 'Poppins', sans-serif !important;
     }
 </style>
-""" 
+"""
