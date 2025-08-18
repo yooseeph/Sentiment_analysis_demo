@@ -1,8 +1,0 @@
-2025-08-13 15:31:57 - sentiment_dashboard - INFO - ✓ Loaded Sentiment Evaluator from OptimizedDualMultimodalEvaluator
-2025-08-13 15:31:57 - sentiment_dashboard - INFO - Starting Sentiment Analysis Dashboard...
-2025-08-13 15:31:57 - sentiment_dashboard - INFO - ============================================================
-2025-08-13 15:31:57 - sentiment_dashboard - INFO - Initializing Sentiment Analysis Dashboard
-2025-08-13 15:31:57 - sentiment_dashboard - INFO - ============================================================
-2025-08-13 15:31:58 - sentiment_dashboard - ERROR - ✗ Failed to load Transcription Model from https://huggingface.co/Cleverlytics/w2v-bert-clean
-2025-08-13 15:31:59 - sentiment_dashboard - INFO - ✓ Loaded VAD Pipeline from pyannote/voice-activity-detection
-2025-08-13 15:31:59 - sentiment_dashboard - CRITICAL - Failed to load transcription model - aborting

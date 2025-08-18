@@ -3,3 +3,6 @@ logs/
 GradioTEMP/
 __pycache__/logs/
 .env
+sentiment_env/
+.venv/
+*.venv/

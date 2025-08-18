@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+    container_name: sentiment_analysis
+    # Make sure your Dockerfile has: EXPOSE 7861
+    ports:
+      - "7877:7877"
+    env_file:
+      - .env
+    environment:
+      # Ensure the app listens on the same port we expose/map
+      SERVER_PORT: "7877"
+      # Pass HF token for any gated models (pyannote, etc.)
+      HF_TOKEN: "${HF_TOKEN:-}"
+      HUGGINGFACE_TOKEN: "${HF_TOKEN:-}"
+      # Prevent tzdata prompts during build/run (optional but safe)
+      TZ: "Etc/UTC"
+    volumes:
+      # Mount local folders into the container
+      - ./models:/app/models:ro
+      - ./logs:/app/logs
+      - ./GradioTEMP:/app/GradioTEMP
+    # --- GPU (optional) ---
+    # Uncomment this block if you want GPU in Docker Desktop (WSL2) and have NVIDIA runtime:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - capabilities: ["gpu"]
+    #           count: "all"
+    #           driver: "nvidia"
+    # Alternatively (Compose v2 supports this):
+    # gpus: "all"

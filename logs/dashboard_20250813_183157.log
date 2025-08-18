@@ -1,9 +1,0 @@
-2025-08-13 18:32:03 - sentiment_dashboard - ERROR - ✗ Failed to load Sentiment Evaluator from OptimizedDualMultimodalEvaluator
-2025-08-13 18:32:03 - sentiment_dashboard - INFO - Starting Sentiment Analysis Dashboard...
-2025-08-13 18:32:03 - sentiment_dashboard - INFO - ============================================================
-2025-08-13 18:32:03 - sentiment_dashboard - INFO - Initializing Sentiment Analysis Dashboard
-2025-08-13 18:32:03 - sentiment_dashboard - INFO - ============================================================
-2025-08-13 18:32:03 - sentiment_dashboard - ERROR - ✗ Failed to load Transcription Model from /srv/lustre01/project/chatgpt_os-gtcy1ct0blo/shared/demo_final/models/transcription/w2v-bert-darija-finetuned-clean
-2025-08-13 18:32:05 - sentiment_dashboard - INFO - ✓ Loaded VAD Pipeline from pyannote/voice-activity-detection
-2025-08-13 18:32:05 - sentiment_dashboard - ERROR - ✗ Failed to load Sentiment Evaluator from OptimizedDualMultimodalEvaluator
-2025-08-13 18:32:05 - sentiment_dashboard - CRITICAL - Failed to load transcription model - aborting
