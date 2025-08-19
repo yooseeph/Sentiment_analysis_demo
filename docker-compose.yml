@@ -13,9 +13,6 @@ services:
     environment:
       # Ensure the app listens on the same port we expose/map
       SERVER_PORT: "7877"
-      # Pass HF token for any gated models (pyannote, etc.)
-      HF_TOKEN: "${HF_TOKEN:-}"
-      HUGGINGFACE_TOKEN: "${HF_TOKEN:-}"
       # Use local VAD model path
       VAD_MODEL_PATH: "/app/models/vad/pyannote-voice-activity-detection"
       # Prevent tzdata prompts during build/run (optional but safe)
