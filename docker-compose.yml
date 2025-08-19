@@ -16,13 +16,17 @@ services:
       # Pass HF token for any gated models (pyannote, etc.)
       HF_TOKEN: "${HF_TOKEN:-}"
       HUGGINGFACE_TOKEN: "${HF_TOKEN:-}"
+      # Use local VAD model path
+      VAD_MODEL_PATH: "/app/models/vad/pyannote-voice-activity-detection"
       # Prevent tzdata prompts during build/run (optional but safe)
       TZ: "Etc/UTC"
     volumes:
       # Mount local folders into the container
-      - ./models:/app/models:ro
+      - ./models:/app/models:ro  # Contains transcription, VAD, and other models
       - ./logs:/app/logs
       - ./GradioTEMP:/app/GradioTEMP
+      # Cache directory for downloaded models (optional, for faster rebuilds)
+      - $HOME/.cache/torch:/root/.cache/torch:ro
     # --- GPU (optional) ---
     # Uncomment this block if you want GPU in Docker Desktop (WSL2) and have NVIDIA runtime:
     # deploy:

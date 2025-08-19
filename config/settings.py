@@ -35,8 +35,10 @@ class ModelConfig:
         )
     )
     
-    # VAD model
-    vad_model_id: str = "pyannote/voice-activity-detection"
+    # VAD model - always use local path
+    vad_model_id: str = field(
+        default_factory=lambda: str(MODELS_DIR / "vad" / "simple-vad")
+    )
     
     # Sentiment models - Agent
     agent_text_model_path: str = field(

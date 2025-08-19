@@ -3,6 +3,7 @@ Model loading and management for Sentiment Analysis Dashboard
 """
 from typing import Optional, Dict, Any, Tuple
 from pathlib import Path
+import os
 import torch
 from transformers import Wav2Vec2BertProcessor, Wav2Vec2BertForCTC
 from pyannote.audio import Pipeline
@@ -71,13 +72,25 @@ class ModelManager:
         try:
             logger.info(f"Loading VAD pipeline: {config.model.vad_model_id}")
             
-            pipeline = Pipeline.from_pretrained(config.model.vad_model_id)
+            # Load the pipeline using the Hugging Face model ID
+            pipeline = Pipeline.from_pretrained(
+                "pyannote/voice-activity-detection",
+                use_auth_token=os.getenv("HF_TOKEN")  # Use token from environment
+            )
+            
+            # Move to correct device if needed
+            pipeline.to(self.device)
             
             # Cache
             self._models[vad_key] = pipeline
             
-            log_model_loading("VAD Pipeline", config.model.vad_model_id, True)
+            log_model_loading("VAD Pipeline", "pyannote/voice-activity-detection", True)
             return pipeline
+            
+        except Exception as e:
+            log_model_loading("VAD Pipeline", config.model.vad_model_id, False)
+            logger.error(f"Failed to load VAD pipeline: {e}")
+            raise
             
         except Exception as e:
             log_model_loading("VAD Pipeline", config.model.vad_model_id, False)
