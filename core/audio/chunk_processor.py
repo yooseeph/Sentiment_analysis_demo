@@ -145,6 +145,7 @@ class ChunkProcessor:
     def optimized_chunker(
         self,
         audio_path: str,
+        business_type: str = "B2C",
         topic: bool = True,
         request: Optional[gr.Request] = None
     ) -> Tuple[List[str], List[tuple], str]:
@@ -282,7 +283,7 @@ class ChunkProcessor:
         # Analyze global topic
         topic_result = "appel blanc"
         if topic:
-            topic_result = analyze_topic(call_transcription)
+            topic_result = analyze_topic(call_transcription, business_type=business_type)
 
         # Cache the complete analysis
         state.full_call_analysis = {

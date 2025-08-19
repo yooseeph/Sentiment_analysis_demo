@@ -117,7 +117,10 @@ def create_vue1_interface(ui_components: Dict[str, Any]) -> Dict[str, Any]:
         
         # Process chunks
         chunks, sentiments, topic_call = chunk_processor.optimized_chunker(
-            audio_path, business_type, request=request
+            audio_path, 
+            business_type=business_type,
+            topic=True, 
+            request=request
         )
         
         # Extract sentiment predictions

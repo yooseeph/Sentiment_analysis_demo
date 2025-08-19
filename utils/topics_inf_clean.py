@@ -245,7 +245,7 @@ class TopicClassifier:
         """
         if not self.enabled:
             logger.warning("Topic classifier not enabled")
-            return "Service non disponible", "Appel blanc", "Non classifié"
+            return "Service non disponible", "VIDE", "Non classifié"
         
         try:
             # Summarize
@@ -261,6 +261,6 @@ class TopicClassifier:
             
         except Exception as e:
             logger.error(f"Inference failed: {e}")
-            return "Erreur", "Appel blanc", "Erreur"
+            return "Erreur", "VIDE", "Erreur"
 
 

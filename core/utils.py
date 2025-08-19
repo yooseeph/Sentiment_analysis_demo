@@ -135,26 +135,27 @@ def append_rows_to_csv(rows: List[Dict], request: Optional[gr.Request] = None):
         logger.error(f"Error appending to CSV: {e}")
 
 
-def analyze_topic(transcription: str) -> str:
+def analyze_topic(transcription: str, business_type: str = "B2C") -> str:
     """
     Analyze the topic of the transcription
     
     Args:
         transcription: Transcribed text
+        business_type: Type of business analysis ("B2B" or "B2C")
         
     Returns:
         Topic classification result
     """
     try:
-        from utils.topics_inf_clean import infer
-        # _, cat, typ = infer(transcription)
-        _, cat, typ = "Appel blanc", "Appel blanc", "Appel blanc"
+        from utils.topics_inf_clean import TopicClassifier
+        classifier = TopicClassifier(business_type=business_type)
+        _, cat, typ = classifier.infer(transcription)
         topic = f"{cat} - {typ}"
-        logger.info(f"Topic analysis result: {topic}")
+        logger.info(f"Topic analysis result [{business_type}]: {topic}")
         return topic
     except Exception as e:
-        logger.error(f"Error in topic analysis: {e}")
-        return "Appel blanc"
+        logger.error(f"Error in topic analysis [{business_type}]: {e}")
+        return "VIDE"
 
 def get_custom_css() -> str:
     """Return custom CSS styles for the interface with proper dark mode support"""
