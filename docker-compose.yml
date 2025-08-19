@@ -14,7 +14,7 @@ services:
       # Ensure the app listens on the same port we expose/map
       SERVER_PORT: "7877"
       # Use local VAD model path
-      VAD_MODEL_PATH: "/app/models/vad/pyannote-voice-activity-detection"
+      VAD_MODEL_PATH: "models/vad/simple-vad"
       # Prevent tzdata prompts during build/run (optional but safe)
       TZ: "Etc/UTC"
     volumes:

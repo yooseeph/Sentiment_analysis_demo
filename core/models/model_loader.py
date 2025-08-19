@@ -2,12 +2,11 @@
 Model loading and management for Sentiment Analysis Dashboard
 """
 from typing import Optional, Dict, Any, Tuple
-from pathlib import Path
 import os
 import torch
+from pathlib import Path
 from transformers import Wav2Vec2BertProcessor, Wav2Vec2BertForCTC
 from pyannote.audio import Pipeline
-
 from config import config
 from utils.logging_config import get_logger, log_model_loading
 
@@ -70,12 +69,21 @@ class ModelManager:
             return self._models[vad_key]
             
         try:
-            logger.info(f"Loading VAD pipeline: {config.model.vad_model_id}")
+            vad_path = Path(config.model.vad_model_id)
+            if not vad_path.exists():
+                raise FileNotFoundError(f"VAD model path does not exist: {vad_path}")
             
-            # Load the pipeline using the Hugging Face model ID
-            pipeline = Pipeline.from_pretrained(
-                "pyannote/voice-activity-detection",
-                use_auth_token=os.getenv("HF_TOKEN")  # Use token from environment
+            # List files in VAD model directory
+            files = list(vad_path.glob("*"))
+            logger.info(f"Files in VAD model directory: {[f.name for f in files]}")
+            
+            logger.info(f"Loading VAD pipeline from: {vad_path}")
+            
+            # Load our own simple VAD model
+            from .vad import SimpleVADPipeline
+            pipeline = SimpleVADPipeline(
+                model_dir=config.model.vad_model_id,
+                device=self.device
             )
             
             # Move to correct device if needed
@@ -86,11 +94,6 @@ class ModelManager:
             
             log_model_loading("VAD Pipeline", "pyannote/voice-activity-detection", True)
             return pipeline
-            
-        except Exception as e:
-            log_model_loading("VAD Pipeline", config.model.vad_model_id, False)
-            logger.error(f"Failed to load VAD pipeline: {e}")
-            raise
             
         except Exception as e:
             log_model_loading("VAD Pipeline", config.model.vad_model_id, False)
@@ -201,4 +204,4 @@ def get_vad_pipeline() -> Any:
 
 def get_sentiment_evaluator() -> Any:
     """Get sentiment evaluator"""
-    return model_manager.load_sentiment_evaluator() 
+    return model_manager.load_sentiment_evaluator()
